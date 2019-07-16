@@ -1,0 +1,15 @@
+{
+    "index": {
+        "partial_filter_selector": {
+            "obj": {
+                "$eq": "HeaderSMS"
+            }
+        },
+        "fields": [
+            "obj",
+            "peid"
+        ]
+    },
+    "name": "headerSearchByPeid",
+    "type": "json"
+}

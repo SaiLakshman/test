@@ -1,0 +1,22 @@
+OrdererOrgs:
+  - Name: Orderer
+    Domain: test
+    Specs:
+      - Hostname: orderer
+#change the template count for increasing the number of peers for all the orgs
+PeerOrgs:
+  - Name: Org1
+    Domain: org1
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 1
+  - Name: Org2
+    Domain: org2
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 1
+

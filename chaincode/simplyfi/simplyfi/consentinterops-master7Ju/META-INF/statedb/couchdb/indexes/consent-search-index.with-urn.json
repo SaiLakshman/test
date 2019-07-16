@@ -1,0 +1,15 @@
+{
+    "index": {
+        "partial_filter_selector": {
+            "obj": {
+                "$eq": "Consent"
+            }
+        },
+        "fields": [
+            "obj",
+            "urn"
+        ]
+    },
+    "name": "consentSearchByUrn",
+    "type": "json"
+}

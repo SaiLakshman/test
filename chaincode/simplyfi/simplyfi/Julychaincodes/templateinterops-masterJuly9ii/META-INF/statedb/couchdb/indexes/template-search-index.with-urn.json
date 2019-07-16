@@ -1,0 +1,10 @@
+{
+	"index":{
+		"fields":[
+			"urn"
+			]	
+		},
+	"name":"templateSearchByurn",
+	"type":"json"
+}
+

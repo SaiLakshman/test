@@ -1,0 +1,9 @@
+{
+	"index":{
+		"fields":[
+			"cli.[]"			]	
+		},
+	"name":"templateSearchByCli",
+	"type":"json"
+}
+

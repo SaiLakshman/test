@@ -1,0 +1,16 @@
+{
+    "index": {
+        "partial_filter_selector": {
+            "obj": {
+                "$eq": "Consent"
+            }
+        },
+        "fields": [
+            "obj",
+            "msisdn",
+	    "sts"
+        ]
+    },
+    "name": "consentSearchByMsisdnSts",
+    "type": "json"
+}

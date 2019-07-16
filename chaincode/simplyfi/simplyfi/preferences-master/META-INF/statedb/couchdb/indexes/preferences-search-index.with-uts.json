@@ -1,0 +1,10 @@
+{
+	"index":{
+		"fields":[
+			"uts"
+			]	
+		},
+	"name":"preferencesSearchByUts",
+	"type":"json"
+}
+

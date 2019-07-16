@@ -1,0 +1,10 @@
+{
+	"index":{
+		"fields":[
+			"peid"
+			]	
+		},
+	"name":"templateSearchBypeid",
+	"type":"json"
+}
+

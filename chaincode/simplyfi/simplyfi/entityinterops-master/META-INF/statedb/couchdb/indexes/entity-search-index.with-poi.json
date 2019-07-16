@@ -1,0 +1,15 @@
+{
+    "index": {
+        "partial_filter_selector": {
+            "obj": {
+                "$eq": "Entity"
+            }
+        },
+        "fields": [
+            "obj",
+            "poi"
+        ]
+    },
+    "name": "entitySearchByPoi",
+    "type": "json"
+}

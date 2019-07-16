@@ -1,0 +1,15 @@
+{
+    "index": {
+        "partial_filter_selector": {
+            "obj": {
+                "$eq": "HeaderVoice"
+            }
+        },
+        "fields": [
+            "obj",
+            "cli"
+        ]
+    },
+    "name": "headerSearchByName",
+    "type": "json"
+}

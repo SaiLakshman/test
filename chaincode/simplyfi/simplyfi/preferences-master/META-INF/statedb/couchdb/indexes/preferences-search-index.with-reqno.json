@@ -1,0 +1,10 @@
+{
+	"index":{
+		"fields":[
+			"reqno"
+			]	
+		},
+	"name":"preferencesSearchByReqno",
+	"type":"json"
+}
+

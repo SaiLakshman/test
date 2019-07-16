@@ -1,0 +1,10 @@
+{
+	"index":{
+		"fields":[
+			"svcprv"
+			]	
+		},
+	"name":"preferencesSearchBySvcprv",
+	"type":"json"
+}
+

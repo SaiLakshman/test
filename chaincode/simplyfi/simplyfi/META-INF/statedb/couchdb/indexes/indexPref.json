@@ -1,0 +1,1 @@
+{"index":{"fields":["preferenceDocType","category"]},"ddoc":"indexPrefDoc", "name":"indexGetAllPreferences","type":"json"}
