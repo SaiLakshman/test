@@ -1,0 +1,108 @@
+version: '2'
+
+networks:
+  test:
+  
+services:
+
+  peer0.org3:
+    container_name: peer0.org3
+    extends:
+      file: base.yaml
+      service: peer
+    environment:
+      - CORE_PEER_ID=peer0.org3
+      - CORE_PEER_ADDRESS=peer0.org3:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org3:7051
+      - CORE_PEER_LOCALMSPID=Org3MSP
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdbOrg3:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
+    volumes:
+      - ./var/hyperledger/peer0.org3:/var/hyperledger/production
+      - ./org3-artifacts/crypto-config/peerOrganizations/org3/peers/peer0.org3/msp:/etc/hyperledger/fabric/msp
+      - ./org3-artifacts/crypto-config/peerOrganizations/org3/peers/peer0.org3/tls:/etc/hyperledger/fabric/tls
+    ports:
+      - 9051:7051
+      - 9053:7053
+    networks:
+      - test
+
+  peer1.org3:
+    container_name: peer1.org3
+    extends:
+      file: base.yaml
+      service: peer
+    environment:
+      - CORE_PEER_ID=peer1.org3
+      - CORE_PEER_ADDRESS=peer1.org3:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.org3:7051
+      - CORE_PEER_LOCALMSPID=Org3MSP
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdbOrg3:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
+    volumes:
+      - ./var/hyperledger/peer1.org3:/var/hyperledger/production
+      - ./org3-artifacts/crypto-config/peerOrganizations/org3/peers/peer1.org3/msp:/etc/hyperledger/fabric/msp
+      - ./org3-artifacts/crypto-config/peerOrganizations/org3/peers/peer1.org3/tls:/etc/hyperledger/fabric/tls
+    ports:
+      - 9056:7051
+      - 9058:7053
+   
+    networks:
+      - test
+
+  couchdbOrg3:
+    container_name: couchdbOrg3
+    image: hyperledger/fabric-couchdb:latest
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=adminpw
+    ports:
+      - 9055:5984
+    volumes:
+      - ./var/hyperledger/couchdbOrg3:/opt/couchdb/data
+    networks:
+      - test
+  
+  ca.org3:
+    image: hyperledger/fabric-ca:latest
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca.org3
+      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org3-cert.pem
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/6c35bed24c227020389a75be0fb5cf544aa3b59f5394d6cf419218493f78635b_sk
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org3-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/6c35bed24c227020389a75be0fb5cf544aa3b59f5394d6cf419218493f78635b_sk
+    ports:
+      - 9054:7054
+    command: sh -c 'fabric-ca-server start -b admin:adminpw'
+    volumes:
+      - ./org3-artifacts/crypto-config/peerOrganizations/org3/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca.org3
+   
+
+  cli.org3:
+    extends:
+      file: base.yaml
+      service: cli
+    container_name: cli.org3
+    environment:
+      - CORE_PEER_ID=cli.org3
+      - CORE_PEER_ADDRESS=peer0.org3:7051
+      - CORE_PEER_LOCALMSPID=Org3MSP
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org3/users/Admin@org3/msp
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org3/peers/peer0.org3/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org3/peers/peer0.org3/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org3/peers/peer0.org3/tls/ca.crt
+    volumes:
+      - ./org3-artifacts/crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+      - ./channels:/opt/gopath/src/github.com/hyperledger/fabric/peer/channels/
+    depends_on:
+      - peer0.org3
+    networks:
+      - test
