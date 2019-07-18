@@ -3,7 +3,7 @@
 #copy the orderer cryptos to the newly generated cryptos of org3
 
 #for creating the json form of org3 
-export FABRIC_CFG_PATH=$PWD && ../../bin/configtxgen -printOrg Org3MSP > ../channel-artifacts/org3.json
+export FABRIC_CFG_PATH=$PWD && ../../bin/configtxgen -printOrg Org3MSP > ../channels/org3.json
 
 #fetching the config block in protobuf format
 peer channel fetch config config_block.pb -o orderer.test:7050 -c testcommon --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/test/orderers/orderer.test/msp/tlscacerts/tlsca.test-cert.pem 
@@ -56,6 +56,7 @@ docker cp cli.org1:/opt/gopath/src/github.com/hyperledger/fabric/peer/testcommon
 #copying from local to org3
 docker cp testcommon.block cli.org3:/opt/gopath/src/github.com/hyperledger/fabric/peer/
 
+#in cli of org3
 #now join org3 to the channel
 peer channel join -b testcommon.block
 # final check whether the org3 is in sync or not
